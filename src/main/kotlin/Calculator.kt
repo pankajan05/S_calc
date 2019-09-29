@@ -1,8 +1,10 @@
 import javafx.fxml.FXML
+import javafx.scene.control.Button
 import javafx.scene.control.Label
 import javafx.scene.layout.VBox
 import tornadofx.*
-import java.awt.event.KeyEvent
+
+import javafx.scene.input.KeyEvent
 
 class Calculator : View() {
     override val root: VBox by fxml()
@@ -14,12 +16,12 @@ class Calculator : View() {
 
         root.lookupAll(".button").forEach {b ->
             b.setOnMouseClicked {
-
+                operator((b as Button).text)
             }
         }
 
-        root.addEventFilter(KeyEvent.KEY_TYPED) {
-
+        root.addEventFilter( KeyEvent.KEY_TYPED) {
+            operator(it.character.toUpperCase().replace("/r","="))
         }
     }
 
@@ -34,5 +36,15 @@ class Calculator : View() {
     get() = when(display.text) {
         "" -> 0
         else -> display.text.toLong()
+    }
+
+    private fun operator(x: String) {
+        if (Regex("[0-9]").matches(x)) {
+            display.text += x
+        } else {
+            when(x) {
+
+            }
+        }
     }
 }
